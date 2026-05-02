@@ -19,3 +19,9 @@ st.markdown("""
 This is a simple chat application built with Streamlit that simulates ChatGPT-like responses
 without using any external LLM or API. All responses are generated locally using Python!
 """)
+
+# Display chat messages from history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
