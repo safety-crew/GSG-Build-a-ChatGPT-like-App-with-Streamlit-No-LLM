@@ -100,3 +100,45 @@ if prompt := st.chat_input("Type your message here..."):
 
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+# Sidebar with additional info
+with st.sidebar:
+    st.header("About This App")
+    st.markdown("""
+    **Features:**
+    - 💬 ChatGPT-style interface
+    - 🚀 Built with Streamlit
+    - 🤖 No external LLM or API required
+    - 💾 Chat history preserved in session
+    - ⚡ Fast local responses
+
+    **How it works:**
+    1. Type a message in the chat input
+    2. The app generates a mock response locally
+    3. Responses are based on simple keyword matching
+    4. Chat history is stored in session state
+
+    **Tech Stack:**
+    - Python
+    - Streamlit
+    - No external dependencies!
+    """)
+
+    st.divider()
+
+    st.header("Chat Stats")
+    st.metric("Total Messages", len(st.session_state.messages))
+    if st.session_state.messages:
+        user_messages = [m for m in st.session_state.messages if m["role"] == "user"]
+        st.metric("User Messages", len(user_messages))
+        assistant_messages = [m for m in st.session_state.messages if m["role"] == "assistant"]
+        st.metric("Assistant Messages", len(assistant_messages))
+
+    st.divider()
+
+    if st.button("Clear Chat History"):
+        st.session_state.messages = []
+        st.rerun()
+
+    st.markdown("---")
+    st.markdown("*Built using Streamlit*")
