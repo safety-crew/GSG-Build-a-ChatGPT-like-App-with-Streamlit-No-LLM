@@ -74,4 +74,29 @@ def generate_mock_response(user_input):
     # Default random response
     return random.choice(responses)
 
+# Chat input
+if prompt := st.chat_input("Type your message here..."):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
+    # Display user message
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Generate and display assistant response
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+
+        # Simulate typing effect
+        full_response = generate_mock_response(prompt)
+        response_text = ""
+
+        for char in full_response:
+            response_text += char
+            message_placeholder.markdown(response_text + "▌")
+            time.sleep(0.01)
+
+        message_placeholder.markdown(response_text)
+
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
